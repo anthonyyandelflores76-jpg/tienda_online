@@ -54,6 +54,7 @@ def init_db():
             ("Padmouse", "Merchandising", 15.00, 12.00, 20, "Pad mouse ergonómico antideslizante con base de goma.", "uploads/padmouse1.jpg"),
             ("Monederos", "Merchandising", 10.00, 8.00, 20, "Monederos personalizados con cierre.", ""),
             ("Lapiceros", "Merchandising", 3.50, 2.00, 42, "Lapiceros corporativos grabados y personalizados.", ""),
+            ("MOCHILAS ESCOLARES BORDADAS", "Merchandising", 45.00, 38.00, 15, "Mochila escolar de lona con detalles bordados a color y bolsillo frontal.", "uploads/mochilas.jpg"),
 
             # Papelería
             ("AFICHES", "Papeleria", 4.00, 2.50, 37, "Afiches impresos a full color en alta resolución.", ""),
@@ -63,6 +64,7 @@ def init_db():
             ("Agenda Normal", "Papeleria", 15.00, 12.00, 20, "Agenda clásica argollada con diseño personalizado.", ""),
             ("Agenda cartón grueso", "Papeleria", 25.00, 20.00, 20, "Agenda de pasta dura en cartón grueso ecológico.", ""),
             ("Folder turísticos", "Papeleria", 5.00, 3.00, 40, "Folders corporativos y turísticos en couché pesado.", ""),
+            ("ROMPECABEZAS EDUCATIVO", "Papeleria", 25.00, 20.00, 20, "Rompecabezas didáctico de 50 piezas con abecedario, números y figuras geométricas.", "uploads/rompecabezas.jpg"),
 
             # Cristalería
             ("FRASCO GRANDE DE VIDRIO", "Cristaleria", 18.00, 15.00, 16, "Frasco grande de vidrio grabado con diseños personalizados.", ""),
