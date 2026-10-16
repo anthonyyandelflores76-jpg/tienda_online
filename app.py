@@ -106,7 +106,7 @@ def index():
 def admin():
     if request.method == 'POST':
         password = request.form.get('password')
-        if password == 'admin123':
+        if password == 'motita2024abc':
             session['admin_logged'] = True
             return redirect(url_for('panel'))
         else:
