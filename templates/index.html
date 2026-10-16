@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TALLER.TCI - Tienda Oficial</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --brand-green: #00a650;
+            --whatsapp-green: #25d366;
+            --facebook-blue: #1877f2;
+            --soft-bg: #f4f6f3;          
+            --card-bg: #ffffff;          
+            --card-hover: #f9fbf9;
+            --border-soft: #dcdedb;      
+            --text-main: #2c3531;
+            --text-muted: #65716b;
+            --sale-red: #d32f2f; /* Rojo comercial tipo Cyber / Saga */
+        }
+
+        body {
+            background-color: var(--soft-bg);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-main);
+        }
+
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            background-color: #ffffff;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-soft);
+            padding: 14px 0;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+        }
+        .brand-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+        .brand-logo span {
+            color: var(--brand-green);
+        }
+
+        /* Menú Desplegable de Categorías */
+        .category-dropdown-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .category-select-btn {
+            width: 100%;
+            background-color: #f8faf7;
+            border: 1px solid var(--border-soft);
+            border-radius: 50px;
+            padding: 10px 22px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            transition: border-color 0.2s;
+        }
+        .category-select-btn:hover {
+            border-color: var(--brand-green);
+        }
+        .category-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            border: 1px solid var(--border-soft);
+            border-radius: 16px;
+            margin-top: 6px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            z-index: 1050;
+            display: none;
+            overflow: hidden;
+        }
+        .category-dropdown-item {
+            display: block;
+            padding: 12px 22px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.92rem;
+            border-bottom: 1px solid #f0f4ee;
+            transition: all 0.15s ease;
+        }
+        .category-dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .category-dropdown-item:hover {
+            background-color: var(--card-hover);
+            color: var(--brand-green);
+            padding-left: 26px;
+        }
+        
+        .cart-badge-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #3b4641;
+            padding: 9px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .cart-badge-btn:hover {
+            background-color: var(--brand-green);
+            color: #ffffff;
+        }
+        .cart-count {
+            background-color: var(--brand-green);
+            color: #ffffff;
+            font-weight: 800;
+            border-radius: 50%;
+            padding: 2px 7px;
+            font-size: 0.75rem;
+        }
+
+        .promo-bar {
+            background-color: #3b4641;
+            color: #e4eee9;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 7px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            border-bottom: 1px solid var(--border-soft);
+        }
+        .promo-track {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scrollPromo 30s linear infinite;
+        }
+        .promo-item {
+            display: inline-block;
+            padding: 0 40px;
+            font-weight: 600;
+        }
+        .promo-item span {
+            color: var(--brand-green);
+        }
+        @keyframes scrollPromo {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Banner de Cyber Ofertas (Estilo Retail) */
+        .cyber-banner {
+            background: linear-gradient(135deg, #2c3531 0%, #1a211e 100%);
+            color: #ffffff;
+            border-radius: 16px;
+            padding: 18px 24px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--sale-red);
+        }
+
+        .infinite-carousel-container {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            padding: 10px 0;
+        }
+        .infinite-track {
+            display: flex;
+            gap: 20px;
+            width: max-content;
+            animation: scrollGallery 25s linear infinite;
+        }
+        .infinite-track:hover {
+            animation-play-state: paused;
+        }
+        .carousel-card-wrapper {
+            width: 320px;
+            flex-shrink: 0;
+        }
+        @keyframes scrollGallery {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-320px * 6 - 20px * 6)); }
+        }
+
+        .gallery-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border-soft);
+            height: 100%;
+            transition: all 0.2s ease;
+        }
+        .gallery-card:hover {
+            transform: translateY(-4px);
+            background-color: var(--card-hover);
+            border-color: #b8c7b0;
+        }
+        .img-container-full {
+            height: 260px;
+            width: 100%;
+            background-color: #eef2ed;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .img-container-full img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+        .badge-spec {
+            background-color: #eef2ed;
+            color: #3b4641;
+            font-size: 0.75rem;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        .social-dropdown-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4ef 100%);
+            border: 1px solid var(--border-soft);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn-social-toggle {
+            background-color: #ffffff;
+            color: var(--text-main);
+            border: 1px solid var(--border-soft);
+            border-radius: 50px;
+            padding: 8px 20px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .btn-social-toggle:hover {
+            background-color: #3b4641;
+            color: #ffffff;
+            border-color: #3b4641;
+        }
+
+        .social-link-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        .social-link-pill:hover {
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+        .pill-facebook {
+            background-color: var(--facebook-blue);
+        }
+        .pill-tiktok {
+            background-color: #3b4641;
+        }
+
+        .categories-tabs {
+            background-color: #ffffff;
+            border-top: 1px solid var(--border-soft);
+            border-bottom: 1px solid var(--border-soft);
+            position: sticky;
+            top: 73px;
+            z-index: 1020;
+        }
+        .category-tab {
+            padding: 13px 22px;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 3px solid transparent;
+            font-size: 0.92rem;
+            display: inline-block;
+            white-space: nowrap;
+            transition: color 0.2s;
+        }
+        .category-tab:hover {
+            color: var(--text-main);
+        }
+        .category-tab.active {
+            color: var(--brand-green);
+            border-bottom-color: var(--brand-green);
+            font-weight: 700;
+        }
+
+        /* Tarjeta de Producto con Estilo Comercial de Oferta */
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-soft);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            background-color: var(--card-hover);
+            border-color: #b8c7b0;
+        }
+        .product-title {
+            text-transform: capitalize;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        .badge-cyber {
+            background-color: var(--sale-red);
+            color: white;
+            font-weight: 800;
+            font-size: 0.72rem;
+            padding: 5px 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(211, 47, 47, 0.3);
+        }
+
+        .btn-add-cart {
+            background-color: #3b4641;
+            color: white;
+            font-weight: 600;
+            border-radius: 50px;
+            border: none;
+            padding: 8px;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+        }
+        .btn-add-cart:hover {
+            background-color: var(--brand-green);
+            color: #ffffff;
+        }
+
+        .btn-whatsapp {
+            background-color: var(--whatsapp-green);
+            color: white;
+            font-weight: 600;
+            border-radius: 50px;
+            border: none;
+            padding: 10px;
+            transition: background 0.2s;
+        }
+        .btn-whatsapp:hover {
+            background-color: #1ebe5d;
+            color: white;
+        }
+
+        .float-cart {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #3b4641;
+            color: #fff;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 26px;
+            box-shadow: 0 6px 20px rgba(59, 70, 65, 0.3);
+            z-index: 1050;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .float-cart:hover {
+            transform: scale(1.08);
+            background-color: var(--brand-green);
+        }
+        .float-cart-count {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: var(--brand-green);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 900;
+            border-radius: 50%;
+            padding: 3px 8px;
+            border: 2px solid var(--soft-bg);
+        }
+
+        .footer-dark {
+            background-color: #2c3531;
+            color: #9ab0a5;
+            padding: 30px 0;
+            border-top: 1px solid var(--border-soft);
+        }
+        .footer-dark a {
+            color: #b5c7bd;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .footer-dark a:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Fijo -->
+    <header class="top-header">
+        <div class="container">
+            <div class="row align-items-center g-2">
+                <div class="col-6 col-md-3 text-start">
+                    <a href="/" class="brand-logo">TALLER<span>.TCI</span></a>
+                </div>
+                
+                <!-- Menú Desplegable de Categorías en el Header -->
+                <div class="col-12 col-md-6 order-3 order-md-2">
+                    <div class="category-dropdown-container">
+                        <button type="button" class="category-select-btn" id="categoryDropdownToggle">
+                            <span>
+                                <i class="bi bi-grid-fill me-2 text-success"></i>
+                                {% if categoria_activa %}Categoría: {{ categoria_activa }}{% else %}Seleccionar Categoría...{% endif %}
+                            </span>
+                            <i class="bi bi-chevron-down small"></i>
+                        </button>
+                        <div id="categoryDropdownMenu" class="category-dropdown-menu">
+                            <a href="/" class="category-dropdown-item"><i class="bi bi-stars me-2 text-success"></i>Ver Todos los Productos</a>
+                            <a href="/?categoria=Sublimacion" class="category-dropdown-item">Sublimación</a>
+                            <a href="/?categoria=Merchandising" class="category-dropdown-item">Merchandising</a>
+                            <a href="/?categoria=Papeleria" class="category-dropdown-item">Papelería</a>
+                            <a href="/?categoria=Cristaleria" class="category-dropdown-item">Cristalería</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-3 text-end order-2 order-md-3">
+                    <button class="cart-badge-btn" onclick="openCartModal()">
+                        <i class="bi bi-cart3 fs-6"></i>
+                        <span>Carrito</span>
+                        <span class="cart-count" id="headerCartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cinta de Anuncios -->
+    <div class="promo-bar">
+        <div class="promo-track">
+            <div class="promo-item"><span>TALLER.TCI</span> — Pedidos directos y personalizados vía WhatsApp</div>
+            <div class="promo-item">  Trabajos de alta calidad y garantía escolar</div>
+            <div class="promo-item"><span>TALENTO TCI</span> — Proyectos y creaciones destacadas del taller</div>
+        </div>
+    </div>
+
+    <!-- Carrusel (Se oculta automáticamente si se selecciona una categoría) -->
+    <div class="container my-4 {% if categoria_activa %}d-none{% endif %}">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="fw-bold m-0 text-dark fs-5 fs-md-4">Proyectos y Trabajos del Taller</h4>
+            <button class="btn-social-toggle btn-sm fw-bold shadow-sm d-flex align-items-center gap-1" type="button" data-bs-toggle="collapse" data-bs-target="#redesDesplegable" aria-expanded="false" aria-controls="redesDesplegable">
+                <i class="bi bi-share-fill text-success"></i> Síguenos en nuestras redes <i class="bi bi-chevron-down small"></i>
+            </button>
+        </div>
+
+        <div class="collapse mb-4" id="redesDesplegable">
+            <div class="card social-dropdown-card p-4">
+                <div class="row align-items-center g-3">
+                    <div class="col-12 col-md-7 text-center text-md-start">
+                        <h5 class="fw-bold m-0 text-dark"><i class="bi bi-broadcast me-2 text-success"></i>Comunidad Oficial TALLER.TCI</h5>
+                        <p class="text-muted small m-0 mt-1">¡Mantente al día con nuestros proyectos escolares, tutoriales y creaciones exclusivas siguiéndonos en nuestras plataformas!</p>
+                    </div>
+                    <div class="col-12 col-md-5 d-flex justify-content-center justify-content-md-end gap-2 flex-wrap">
+                        <a href="https://www.facebook.com/TallerDeComputacionLabarthino/" target="_blank" class="social-link-pill pill-facebook">
+                            <i class="bi bi-facebook fs-5"></i> Facebook
+                        </a>
+                        <a href="https://www.tiktok.com/@taller.computacion.tci?_r=1&_t=ZS-9AY9pG8ukxG" target="_blank" class="social-link-pill pill-tiktok">
+                            <i class="bi bi-tiktok fs-5"></i> TikTok
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="infinite-carousel-container">
+            <div class="infinite-track">
+                
+                <div class="carousel-card-wrapper">
+                    <div class="gallery-card p-3 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge-spec">Merchandising y Textil</span>
+                            <span class="text-success fw-bold small"><i class="bi bi-check-circle-fill"></i> TALLER.TCI</span>
+                        </div>
+                        <div class="img-container-full my-2">
+                            <img src="{{ url_for('static', filename='uploads/estudiante1.jpg') }}" alt="Polos y Estampados">
+                        </div>
+                        <h5 class="fw-bold text-dark mt-2 mb-1 fs-6">Diseños y Estampados</h5>
+                        <p class="text-muted small flex-grow-1">Creación de polos, poleras y productos gráficos vectorizados con acabados de alta calidad.</p>
+                        <a href="https://wa.me/51938124557?text=Hola%20TALLER.TCI,%20necesito%20comprar%20este%20producto:%20Diseños%20y%20Estampados%20Personalizados" target="_blank" class="btn btn-whatsapp btn-sm w-100 py-2 mt-auto">
+                            <i class="bi bi-whatsapp"></i> Consultar por WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div class="carousel-card-wrapper">
+                    <div class="gallery-card p-3 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge-spec">Feria y Presentación</span>
+                            <span class="text-success fw-bold small"><i class="bi bi-check-circle-fill"></i> TALLER.TCI</span>
+                        </div>
+                        <div class="img-container-full my-2">
+                            <img src="{{ url_for('static', filename='uploads/estudiante2.jpg') }}" alt="Exhibición Escolar">
+                        </div>
+                        <h5 class="fw-bold text-dark mt-2 mb-1 fs-6">Exhibición Escolar</h5>
+                        <p class="text-muted small flex-grow-1">Demostración práctica de productos y emprendimientos desarrollados por los estudiantes.</p>
+                        <a href="https://wa.me/51938124557?text=Hola%20TALLER.TCI,%20necesito%20comprar%20este%20producto:%20Exhibición%20de%20Proyectos%20Escolares" target="_blank" class="btn btn-whatsapp btn-sm w-100 py-2 mt-auto">
+                            <i class="bi bi-whatsapp"></i> Consultar por WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div class="carousel-card-wrapper">
+                    <div class="gallery-card p-3 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge-spec">Equipo e Impresiones</span>
+                            <span class="text-success fw-bold small"><i class="bi bi-check-circle-fill"></i> TALLER.TCI</span>
+                        </div>
+                        <div class="img-container-full my-2">
+                            <img src="{{ url_for('static', filename='uploads/estudiante3.jpg') }}" alt="Presentación de Trabajos">
+                        </div>
+                        <h5 class="fw-bold text-dark mt-2 mb-1 fs-6">Souvenirs y Tazas</h5>
+                        <p class="text-muted small flex-grow-1">Muestra de tazas personalizadas y material gráfico impreso realizado en el taller.</p>
+                        <a href="https://wa.me/51938124557?text=Hola%20TALLER.TCI,%20necesito%20comprar%20este%20producto:%20Entrega%20de%20Trabajos%20y%20Souvenirs" target="_blank" class="btn btn-whatsapp btn-sm w-100 py-2 mt-auto">
+                            <i class="bi bi-whatsapp"></i> Consultar por WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div class="carousel-card-wrapper">
+                    <div class="gallery-card p-3 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge-spec">Diseño Gráfico</span>
+                            <span class="text-success fw-bold small"><i class="bi bi-check-circle-fill"></i> TALLER.TCI</span>
+                        </div>
+                        <div class="img-container-full my-2">
+                            <img src="{{ url_for('static', filename='uploads/estudiante4.jpg') }}" alt="Tarjetas y Diseños">
+                        </div>
+                        <h5 class="fw-bold text-dark mt-2 mb-1 fs-6">Tarjetas de Invitación</h5>
+                        <p class="text-muted small flex-grow-1">Elaboración creativa de invitaciones para quinceañeros, bautizos y eventos especiales.</p>
+                        <a href="https://wa.me/51938124557?text=Hola%20TALLER.TCI,%20necesito%20comprar%20este%20producto:%20Tarjetas%20de%20Invitación%20y%20Eventos" target="_blank" class="btn btn-whatsapp btn-sm w-100 py-2 mt-auto">
+                            <i class="bi bi-whatsapp"></i> Consultar por WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div class="carousel-card-wrapper">
+                    <div class="gallery-card p-3 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge-spec">Grabado en Cristal</span>
+                            <span class="text-success fw-bold small"><i class="bi bi-check-circle-fill"></i> TALLER.TCI</span>
+                        </div>
+                        <div class="img-container-full my-2">
+                            <img src="{{ url_for('static', filename='uploads/estudiante5.jpg') }}" alt="Jarras Grabadas">
+                        </div>
+                        <h5 class="fw-bold text-dark mt-2 mb-1 fs-6">Jarras Personalizadas</h5>
+                        <p class="text-muted small flex-grow-1">Trabajos de grabado con frases, nombres y motivos dedicados para regalo o recuerdo.</p>
+                        <a href="https://wa.me/51938124557?text=Hola%20TALLER.TCI,%20necesito%20comprar%20este%20producto:%20Jarras%20de%20Vidrio%20Personalizadas" target="_blank" class="btn btn-whatsapp btn-sm w-100 py-2 mt-auto">
+                            <i class="bi bi-whatsapp"></i> Consultar por WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <div class="carousel-card-wrapper">
+                    <div class="gallery-card p-3 d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge-spec">Stickers y Cristalería</span>
+                            <span class="text-success fw-bold small"><i class="bi bi-check-circle-fill"></i> TALLER.TCI</span>
+                        </div>
+                        <div class="img-container-full my-2">
+                            <img src="{{ url_for('static', filename='uploads/estudiante6.jpg') }}" alt="Jarras Temáticas">
+                        </div>
+                        <h5 class="fw-bold text-dark mt-2 mb-1 fs-6">Cristalería Temática</h5>
+                        <p class="text-muted small flex-grow-1">Diseños temáticos de personajes y logotipos plasmados en jarras de alta durabilidad.</p>
+                        <a href="https://wa.me/51938124557?text=Hola%20TALLER.TCI,%20necesito%20comprar%20este%20producto:%20Cristalería%20Temática%20y%20Animada" target="_blank" class="btn btn-whatsapp btn-sm w-100 py-2 mt-auto">
+                            <i class="bi bi-whatsapp"></i> Consultar por WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Duplicados para ciclo continuo -->
+                <div class="carousel-card-wrapper"><div class="gallery-card p-3 d-flex flex-column"><div class="d-flex justify-content-between align-items-center mb-2"><span class="badge-spec">Merchandising y Textil</span><span class="text-success fw-bold small"><i class="bi bi-check-circle-fill"></i> TALLER.TCI</span></div><div class="img-container-full my-2"><img src="{{ url_for('static', filename='uploads/estudiante1.jpg') }}" alt="Polos y Estampados"></div><h5 class="fw-bold text-dark mt-2 mb-1 fs-6">Diseños y Estampados</h5><p class="text-muted small flex-grow-1">Creación de polos, poleras y productos gráficos vectorizados con acabados de alta calidad.</p><a href="https://wa.me/51938124557" target="_blank" class="btn btn-whatsapp btn-sm w-100 py-2 mt-auto"><i class="bi bi-whatsapp"></i> Consultar por WhatsApp</a></div></div>
+                <div class="carousel-card-wrapper"><div class="gallery-card p-3 d-flex flex-column"><div class="d-flex justify-content-between align-items-center mb-2"><span class="badge-spec">Feria y Presentación</span><span class="text-success fw-bold small"><i class="bi bi-check-circle-fill"></i> TALLER.TCI</span></div><div class="img-container-full my-2"><img src="{{ url_for('static', filename='uploads/estudiante2.jpg') }}" alt="Exhibición Escolar"></div><h5 class="fw-bold text-dark mt-2 mb-1 fs-6">Exhibición Escolar</h5><p class="text-muted small flex-grow-1">Demostración práctica de productos y emprendimientos desarrollados por los estudiantes.</p><a href="https://wa.me/51938124557" target="_blank" class="btn btn-whatsapp btn-sm w-100 py-2 mt-auto"><i class="bi bi-whatsapp"></i> Consultar por WhatsApp</a></div></div>
+                <div class="carousel-card-wrapper"><div class="gallery-card p-3 d-flex flex-column"><div class="d-flex justify-content-between align-items-center mb-2"><span class="badge-spec">Equipo e Impresiones</span><span class="text-success fw-bold small"><i class="bi bi-check-circle-fill"></i> TALLER.TCI</span></div><div class="img-container-full my-2"><img src="{{ url_for('static', filename='uploads/estudiante3.jpg') }}" alt="Presentación de Trabajos"></div><h5 class="fw-bold text-dark mt-2 mb-1 fs-6">Souvenirs y Tazas</h5><p class="text-muted small flex-grow-1">Muestra de tazas personalizadas y material gráfico impreso realizado en el taller.</p><a href="https://wa.me/51938124557" target="_blank" class="btn btn-whatsapp btn-sm w-100 py-2 mt-auto"><i class="bi bi-whatsapp"></i> Consultar por WhatsApp</a></div></div>
+                <div class="carousel-card-wrapper"><div class="gallery-card p-3 d-flex flex-column"><div class="d-flex justify-content-between align-items-center mb-2"><span class="badge-spec">Diseño Gráfico</span><span class="text-success fw-bold small"><i class="bi bi-check-circle-fill"></i> TALLER.TCI</span></div><div class="img-container-full my-2"><img src="{{ url_for('static', filename='uploads/estudiante4.jpg') }}" alt="Tarjetas y Diseños"></div><h5 class="fw-bold text-dark mt-2 mb-1 fs-6">Tarjetas de Invitación</h5><p class="text-muted small flex-grow-1">Elaboración creativa de invitaciones para quinceañeros, bautizos y eventos especiales.</p><a href="https://wa.me/51938124557" target="_blank" class="btn btn-whatsapp btn-sm w-100 py-2 mt-auto"><i class="bi bi-whatsapp"></i> Consultar por WhatsApp</a></div></div>
+                <div class="carousel-card-wrapper"><div class="gallery-card p-3 d-flex flex-column"><div class="d-flex justify-content-between align-items-center mb-2"><span class="badge-spec">Grabado en Cristal</span><span class="text-success fw-bold small"><i class="bi bi-check-circle-fill"></i> TALLER.TCI</span></div><div class="img-container-full my-2"><img src="{{ url_for('static', filename='uploads/estudiante5.jpg') }}" alt="Jarras Grabadas"></div><h5 class="fw-bold text-dark mt-2 mb-1 fs-6">Jarras Personalizadas</h5><p class="text-muted small flex-grow-1">Trabajos de grabado con frases, nombres y motivos dedicados para regalo o recuerdo.</p><a href="https://wa.me/51938124557" target="_blank" class="btn btn-whatsapp btn-sm w-100 py-2 mt-auto"><i class="bi bi-whatsapp"></i> Consultar por WhatsApp</a></div></div>
+                <div class="carousel-card-wrapper"><div class="gallery-card p-3 d-flex flex-column"><div class="d-flex justify-content-between align-items-center mb-2"><span class="badge-spec">Stickers y Cristalería</span><span class="text-success fw-bold small"><i class="bi bi-check-circle-fill"></i> TALLER.TCI</span></div><div class="img-container-full my-2"><img src="{{ url_for('static', filename='uploads/estudiante6.jpg') }}" alt="Jarras Temáticas"></div><h5 class="fw-bold text-dark mt-2 mb-1 fs-6">Cristalería Temática</h5><p class="text-muted small flex-grow-1">Diseños temáticos de personajes y logotipos plasmados en jarras de alta durabilidad.</p><a href="https://wa.me/51938124557" target="_blank" class="btn btn-whatsapp btn-sm w-100 py-2 mt-auto"><i class="bi bi-whatsapp"></i> Consultar por WhatsApp</a></div></div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Pestañas inferiores de Categorías -->
+    <div class="categories-tabs mb-4">
+        <div class="container">
+            <div class="d-flex gap-2 overflow-auto py-1">
+                <a href="/" class="category-tab {% if not categoria_activa and not request.args.get('q') %}active{% endif %}">Todos los productos</a>
+                <a href="/?categoria=Sublimacion" class="category-tab {% if categoria_activa == 'Sublimacion' %}active{% endif %}">Sublimación</a>
+                <a href="/?categoria=Merchandising" class="category-tab {% if categoria_activa == 'Merchandising' %}active{% endif %}">Merchandising</a>
+                <a href="/?categoria=Papeleria" class="category-tab {% if categoria_activa == 'Papeleria' %}active{% endif %}">Papelería</a>
+                <a href="/?categoria=Cristaleria" class="category-tab {% if categoria_activa == 'Cristaleria' %}active{% endif %}">Cristalería</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grilla de Productos -->
+    <div class="container mb-5">
+        
+        <!-- Banner Cyber Opcional cuando hay ofertas activas -->
+        <div class="cyber-banner d-none d-md-flex align-items-center">
+            <div>
+                <h5 class="fw-bold mb-1"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>¡TCI CYBER DAYS / OFERTAS FLASH!</h5>
+                <p class="text-white-50 small mb-0">Aprovecha descuentos increíbles por tiempo limitado en productos seleccionados del taller.</p>
+            </div>
+            <span class="badge bg-danger fs-6 px-3 py-2 uppercase fw-bold">¡Hasta -30% OFF!</span>
+        </div>
+
+        <h4 class="fw-bold mb-4 text-dark fs-5 fs-md-4">
+            {% if request.args.get('q') %}
+                Resultados de búsqueda para "{{ request.args.get('q') }}"
+            {% elif categoria_activa %}
+                Categoría: {{ categoria_activa }}
+            {% else %}
+                Catálogo de Productos - TALLER.TCI
+            {% endif %}
+        </h4>
+
+        {% if not productos %}
+            <div class="alert border text-center p-5 rounded-3 shadow-sm bg-white" style="border-color: var(--border-soft) !important;">
+                <h5 class="fw-bold text-secondary">No se encontraron productos.</h5>
+                <p class="text-muted small mb-0">Intenta con otro término o categoría.</p>
+            </div>
+        {% else %}
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3 g-md-4">
+                {% for p in productos %}
+                <div class="col">
+                    {% set precio_actual = p.precio_oferta if p.precio_oferta else p.precio_normal %}
+                    
+                    {% if p.imagen %}
+                        {% if p.imagen.startswith('http') %}
+                            {% set img_url = p.imagen %}
+                        {% elif p.imagen.startswith('uploads/') %}
+                            {% set img_url = url_for('static', filename=p.imagen) %}
+                        {% else %}
+                            {% set img_url = url_for('static', filename='uploads/' + p.imagen) %}
+                        {% endif %}
+                    {% else %}
+                        {% set img_url = '' %}
+                    {% endif %}
+                    
+                    <div class="card product-card h-100 p-2 p-md-3 d-flex flex-column position-relative">
+                        <!-- Etiqueta de descuento tipo Retail (Saga/Ripley) -->
+                        {% if p.descuento %}
+                        <span class="badge badge-cyber position-absolute top-0 start-0 m-2 m-md-3 shadow-sm">-{{ p.descuento }}% OFF</span>
+                        {% endif %}
+                        
+                        {% if p.imagen %}
+                        <img src="{{ img_url }}" class="card-img-top object-fit-cover rounded mb-2" style="height: 130px; background-color: #eef2ed;" alt="{{ p.nombre }}">
+                        {% else %}
+                        <img src="https://via.placeholder.com/300x180?text=Sin+Imagen" class="card-img-top rounded mb-2" style="height: 130px;" alt="Sin imagen">
+                        {% endif %}
+
+                        <div class="card-body d-flex flex-column p-0 flex-grow-1">
+                            <span class="text-success small text-uppercase fw-semibold" style="font-size: 0.68rem;">{{ p.categoria }}</span>
+                            <h6 class="mt-1 product-title text-truncate">{{ p.nombre }}</h6>
+                            <p class="text-muted small flex-grow-1 d-none d-sm-block" style="font-size: 0.8rem;">{{ p.descripcion[:50] if p.descripcion else '' }}...</p>
+                            
+                            <div class="pt-2 border-top mt-auto" style="border-color: var(--border-soft) !important;">
+                                {% if p.precio_oferta %}
+                                    <div class="text-decoration-line-through text-muted" style="font-size: 0.75rem;">S/. {{ "%.2f"|format(p.precio_normal) }}</div>
+                                    <div class="fw-bold text-danger fs-6 fs-md-5">S/. {{ "%.2f"|format(p.precio_oferta) }}</div>
+                                {% else %}
+                                    <div class="fw-bold fs-6 fs-md-5 text-dark">S/. {{ "%.2f"|format(p.precio_normal) }}</div>
+                                {% endif %}
+
+                                <button type="button" 
+                                        class="btn btn-add-cart w-100 mt-2 btn-agregar"
+                                        data-nombre="{{ p.nombre }}"
+                                        data-precio="{{ '%.2f'|format(precio_actual) }}"
+                                        data-imagen="{{ img_url }}">
+                                    <i class="bi bi-cart-plus"></i> <span class="d-none d-sm-inline">Agregar al Carrito</span><span class="d-inline d-sm-none">Agregar</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Botón Flotante de Carrito -->
+    <button class="float-cart" onclick="openCartModal()" title="Ver Carrito de Compras">
+        <i class="bi bi-cart3"></i>
+        <span class="float-cart-count" id="floatCartCount">0</span>
+    </button>
+
+    <!-- Modal del Carrito -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4 bg-white" style="color: var(--text-main); border: 1px solid var(--border-soft) !important;">
+                <div class="modal-header border-0 rounded-top-4 py-3" style="background-color: #3b4641; color: white;">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-cart3 me-2 text-success"></i>Tu Carrito de Compras</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="cartItemsContainer"></div>
+                    <div class="d-flex justify-content-between align-items-center pt-3 border-top mt-3" style="border-color: var(--border-soft) !important;">
+                        <h5 class="fw-bold mb-0">Total:</h5>
+                        <h4 class="fw-bold text-success mb-0" id="cartTotal">S/. 0.00</h4>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 p-4 pt-0">
+                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill px-3" onclick="clearCart()">Vaciar Carrito</button>
+                    <a id="sendWhatsappOrderBtn" href="#" target="_blank" class="btn btn-whatsapp py-2 px-4 fw-bold ms-auto rounded-pill">
+                        <i class="bi bi-whatsapp"></i> Comprar por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-dark text-center">
+        <div class="container">
+            <p class="mb-1">&copy; 2026 TALLER.TCI. Todos los derechos reservados.</p>
+            <a href="/admin">Acceso de gestión interna</a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var cart = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var dropdownToggle = document.getElementById('categoryDropdownToggle');
+            var dropdownMenu = document.getElementById('categoryDropdownMenu');
+
+            dropdownToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.category-dropdown-container')) {
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+
+            document.querySelectorAll('.btn-agregar').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var nombre = this.getAttribute('data-nombre');
+                    var precio = this.getAttribute('data-precio');
+                    var imagen = this.getAttribute('data-imagen');
+                    addToCart(nombre, precio, imagen);
+                });
+            });
+        });
+
+        function addToCart(nombre, precio, imagen) {
+            var existingIndex = cart.findIndex(item => item.nombre === nombre);
+            if (existingIndex > -1) {
+                cart[existingIndex].cantidad += 1;
+            } else {
+                cart.push({
+                    nombre: nombre,
+                    precio: parseFloat(precio),
+                    imagen: imagen,
+                    cantidad: 1
+                });
+            }
+            updateCartUI();
+            var floatBtn = document.querySelector('.float-cart');
+            floatBtn.style.transform = 'scale(1.2)';
+            setTimeout(function() {
+                floatBtn.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        function updateCartUI() {
+            var totalCount = cart.reduce((sum, item) => sum + item.cantidad, 0);
+            document.getElementById('headerCartCount').innerText = totalCount;
+            document.getElementById('floatCartCount').innerText = totalCount;
+
+            var container = document.getElementById('cartItemsContainer');
+            var sendBtn = document.getElementById('sendWhatsappOrderBtn');
+
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="text-center py-4 text-muted"><i class="bi bi-cart-x fs-1 d-block mb-2"></i>Tu carrito está vacío.</div>';
+                document.getElementById('cartTotal').innerText = 'S/. 0.00';
+                if (sendBtn) sendBtn.classList.add('disabled');
+                return;
+            }
+
+            if (sendBtn) sendBtn.classList.remove('disabled');
+
+            var html = '<div class="list-group list-group-flush" style="background: transparent;">';
+            var total = 0;
+
+            cart.forEach((item, index) => {
+                var itemTotal = item.precio * item.cantidad;
+                total += itemTotal;
+                var img = item.imagen && item.imagen !== '' ? item.imagen : 'https://via.placeholder.com/60?text=Sin+Foto';
+
+                html += `
+                    <div class="list-group-item d-flex align-items-center justify-content-between py-3 px-0" style="background-color: transparent; border-color: var(--border-soft); color: var(--text-main);">
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="${img}" width="50" height="50" class="rounded object-fit-cover bg-light border">
+                            <div>
+                                <h6 class="fw-bold mb-0 text-capitalize">${item.nombre}</h6>
+                                <small class="text-muted">S/. ${item.precio.toFixed(2)} c/u</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-secondary" onclick="changeQuantity(${index}, -1)">-</button>
+                                <span class="btn btn-light disabled fw-bold border" style="width: 40px;">${item.cantidad}</span>
+                                <button class="btn btn-outline-secondary" onclick="changeQuantity(${index}, 1)">+</button>
+                            </div>
+                            <span class="fw-bold text-success" style="min-width: 80px; text-align: right;">S/. ${itemTotal.toFixed(2)}</span>
+                            <button class="btn btn-link text-danger p-0 ms-2" onclick="removeItem(${index})"><i class="bi bi-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+            document.getElementById('cartTotal').innerText = 'S/. ' + total.toFixed(2);
+
+            var message = "Hola TALLER.TCI, necesito comprar este producto:\n\n";
+            cart.forEach(item => {
+                message += `• ${item.nombre} - S/. ${(item.precio * item.cantidad).toFixed(2)} (Cantidad: ${item.cantidad})\n`;
+            });
+
+            var whatsappUrl = "https://wa.me/51938124557?text=" + encodeURIComponent(message);
+            if (sendBtn) sendBtn.href = whatsappUrl;
+        }
+
+        function changeQuantity(index, delta) {
+            cart[index].cantidad += delta;
+            if (cart[index].cantidad <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+        }
+
+        function openCartModal() {
+            updateCartUI();
+            var modal = new bootstrap.Modal(document.getElementById('cartModal'));
+            modal.show();
+        }
+    </script>
+</body>
+</html>

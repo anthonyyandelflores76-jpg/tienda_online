@@ -1,0 +1,13 @@
+
+body { background-color: #4780ba; font-family: 'Poppins', 'Segoe UI', Tahoma, sans-serif; }
+.navbar-tienda { background-color: #111111; border-bottom: 3px solid #00a650; }
+.navbar-brand { font-size: 1.8rem; letter-spacing: 1px; color: #ffffff !important; }
+.card-producto { transition: all 0.3s ease; border: 1px solid #e0e0e0; border-radius: 12px; background: #fff; }
+.card-producto:hover { transform: translateY(-6px); box-shadow: 0 12px 25px rgba(0,0,0,0.15); border-color: #00a650; }
+.badge-descuento { background-color: #d32f2f; color: white; font-weight: bold; border-radius: 6px; padding: 6px 10px; }
+.precio-tachado { text-decoration: line-through; color: #9e9e9e; font-size: 0.9rem; }
+.precio-oferta { color: #d32f2f; font-weight: bold; font-size: 1.3rem; }
+.carousel-item { height: 380px; background-color: #212121; border-radius: 15px; overflow: hidden; }
+.carousel-item img { height: 100%; object-fit: cover; opacity: 0.8; }
+.btn-verde { background-color: #00a650; color: white; font-weight: 600; }
+.btn-verde:hover { background-color: #008f43; color: white; }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - TALLER.TCI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <span class="navbar-brand fw-bold text-uppercase">TALLER<span class="text-success">.TCI</span> — Panel Admin</span>
+            <a href="/logout" class="btn btn-outline-light btn-sm"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <div class="row g-4">
+            <!-- Formulario para agregar productos -->
+            <div class="col-12 col-lg-4">
+                <div class="card shadow-sm border-0 rounded-3 p-4 bg-white">
+                    <h5 class="fw-bold mb-3">Agregar Producto</h5>
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="mb-2">
+                            <label class="form-label small fw-bold">Nombre del Producto</label>
+                            <input type="text" class="form-control form-control-sm" name="nombre" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-bold">Categoría</label>
+                            <select class="form-select form-select-sm" name="categoria" required>
+                                <option value="Sublimacion">Sublimación</option>
+                                <option value="Merchandising">Merchandising</option>
+                                <option value="Papeleria">Papelería</option>
+                                <option value="Cristaleria">Cristalería</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-bold">Precio Normal (S/.)</label>
+                            <input type="number" step="0.01" class="form-control form-control-sm" name="precio_normal" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-bold">Precio Oferta (Opcional)</label>
+                            <input type="number" step="0.01" class="form-control form-control-sm" name="precio_oferta">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-bold">% Descuento (Opcional)</label>
+                            <input type="number" class="form-control form-control-sm" name="descuento">
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label small fw-bold">Descripción</label>
+                            <textarea class="form-control form-control-sm" name="descripcion" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-success">Imagen del Producto</label>
+                            <input type="file" class="form-control form-control-sm" name="imagen">
+                        </div>
+                        <button type="submit" class="btn btn-success w-100 fw-bold py-2"><i class="bi bi-plus-circle"></i> Guardar Producto</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tabla de productos existentes -->
+            <div class="col-12 col-lg-8">
+                <div class="card shadow-sm border-0 rounded-3 p-4 bg-white">
+                    <h5 class="fw-bold mb-3">Lista de Productos Registrados</h5>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Nombre</th>
+                                    <th>Cat.</th>
+                                    <th>Precio</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for p in productos %}
+                                <tr>
+                                    <td>
+                                        {% if p.imagen %}
+                                        <img src="{{ url_for('static', filename=p.imagen) }}" width="45" height="45" class="rounded object-fit-cover shadow-sm">
+                                        {% else %}
+                                        <span class="text-muted small">Sin foto</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold">{{ p.nombre }}</td>
+                                    <td><span class="badge bg-secondary">{{ p.categoria }}</span></td>
+                                    <td>S/. {{ "%.2f"|format(p.precio_oferta if p.precio_oferta else p.precio_normal) }}</td>
+                                    <td>
+                                        <a href="/admin/editar/{{ p.id }}" class="btn btn-primary btn-sm" title="Editar / Subir Foto"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="/admin/eliminar/{{ p.id }}" class="btn btn-danger btn-sm" title="Eliminar" onclick="return confirm('¿Estás seguro de eliminar este producto?');"><i class="bi bi-trash"></i></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
