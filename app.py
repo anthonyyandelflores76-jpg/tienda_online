@@ -83,6 +83,9 @@ def init_db():
         
     conexion.close()
 
+# Inicializar la base de datos al arrancar la app en cualquier entorno (incluyendo Gunicorn/Render)
+init_db()
+
 @app.route('/')
 def index():
     conexion = sqlite3.connect('tienda.db')
@@ -211,6 +214,7 @@ def eliminar(id):
         
     conexion = sqlite3.connect('tienda.db')
     cursor = conexion.cursor()
+    cursor.execute("SELECT * FROM productos WHERE id = ?", (id,))
     cursor.execute("DELETE FROM productos WHERE id = ?", (id,))
     conexion.commit()
     conexion.close()
@@ -222,5 +226,4 @@ def logout():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    init_db()
     app.run(host='0.0.0.0', port=5000, debug=True)
