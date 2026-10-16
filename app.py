@@ -71,7 +71,7 @@ def init_db():
             ("FRASCO MEDIANO DE VIDRIO", "Cristaleria", 12.00, 10.00, 16, "Frasco mediano de vidrio decorativo para conservas o regalos.", "uploads/frasco pequeño.jpg"),
             ("JARRA DE VIDRIO 2 LITROS", "Cristaleria", 24.00, 20.00, 16, "Jarra de vidrio de 2 litros con asa y diseño grabado.", "uploads/jaras de 2 litros.jpg"),
             ("VASO DE VIDRIO 1", "Cristaleria", 10.00, 8.00, 20, "Vaso de vidrio institucional estándar de alta resistencia.", "uploads/vaso.jpg"),
-            ("VASO DE VIDRIO 2 DELGADO", "Cristaleria", 9.00, 7.00, 22, "Vaso de vidrio delgado y estilizado para bebidas frías.", "uploads/vaso2.jpg"),
+            ("VASO DE VIDRIO 2 DELGADO", "Cristaleria", 9.00, 7.00, 22, "Vaso de vidrio delgado y estilizado para bebidas frías.", "uploads/vaso2"),
             ("VASO CHOP", "Cristaleria", 11.00, 8.50, 22, "Vaso chop cervecero de vidrio pesado con grabado personalizado.", "uploads/chop.jpg")
         ]
         
