@@ -64,7 +64,7 @@ def init_db():
             ("Agenda Normal", "Papeleria", 15.00, 12.00, 20, "Agenda clásica argollada con diseño personalizado.", "uploads/agendas.jpg"),
             ("Agenda cartón grueso", "Papeleria", 25.00, 20.00, 20, "Agenda de pasta dura en cartón grueso ecológico.", "uploads/7.jpg"),
             ("Folder turísticos", "Papeleria", 5.00, 3.00, 40, "Folders corporativos y turísticos en couché pesado.", "uploads/folder.jpg"),
-            ("ROMPECABEZAS EDUCATIVO", "Papeleria", 25.00, 20.00, 20, "Rompecabezas didáctico de 50 piezas con abecedario, números y figuras geométricas.", "uploads/rompecabezas.jpg"),
+            ("ROMPECABEZAS EDUCATIVO", "Papeleria", 15.00, 10.00, 33, "Rompecabezas didáctico de 50 piezas con abecedario, números y figuras geométricas.", "uploads/rompecabezas.jpg"),
 
             # Cristalería
             ("FRASCO GRANDE DE VIDRIO", "Cristaleria", 18.00, 15.00, 16, "Frasco grande de vidrio grabado con diseños personalizados.", "uploads/frasco grande.jpg"),
@@ -83,7 +83,6 @@ def init_db():
         
     conexion.close()
 
-# Inicializar la base de datos al arrancar la app en cualquier entorno (incluyendo Gunicorn/Render)
 init_db()
 
 @app.route('/')
