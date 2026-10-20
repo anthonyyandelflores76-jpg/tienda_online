@@ -40,6 +40,7 @@ def init_db():
             ("Posavasos", "Sublimacion", 6.00, 4.00, 33, "Posavasos protectores de mesa personalizados.", "uploads/posa vasos.jpg"),
             ("Gorras", "Sublimacion", 25.00, 20.00, 20, "Gorras deportivas con diseño frontal sublimado o bordado.", "uploads/gorros1.jpg"),
             ("Thermo digital", "Sublimacion", 48.00, 40.00, 16, "Termo inteligente de acero inoxidable con indicador LED.", "uploads/tomatodos digital.jpg"),
+            ("RELOJ SUBLIMADO", "Sublimacion", 30.00, 25.00, 17, "Reloj de pared o escritorio personalizado mediante sublimación.", "uploads/reloj sublimado.png"),
 
             # Merchandising
             ("LLAVEROS ESPEJOS", "Merchandising", 4.00, 2.50, 37, "Llavero redondo con espejo posterior personalizado.", "uploads/espejo.jpg"),
@@ -55,6 +56,7 @@ def init_db():
             ("Monederos", "Merchandising", 10.00, 8.00, 20, "Monederos personalizados con cierre.", "uploads/monederos.jpg"),
             ("Lapiceros", "Merchandising", 3.50, 2.00, 42, "Lapiceros corporativos grabados y personalizados.", "uploads/lapiceros.jpg"),
             ("MOCHILAS ESCOLARES BORDADAS", "Merchandising", 45.00, 38.00, 15, "Mochila escolar de lona con detalles bordados a color y bolsillo frontal.", "uploads/mochilas.jpg"),
+            ("GLOBOS METALIZADOS", "Merchandising", 7.00, 5.00, 28, "Globos metalizados personalizados para sorpresas y eventos.", "uploads/globo metalizado.jpg"),
 
             # Papelería
             ("AFICHES", "Papeleria", 4.00, 2.50, 37, "Afiches impresos a full color en alta resolución.", "uploads/afiche.jpg"),
@@ -65,6 +67,10 @@ def init_db():
             ("Agenda cartón grueso", "Papeleria", 25.00, 20.00, 20, "Agenda de pasta dura en cartón grueso ecológico.", "uploads/7.jpg"),
             ("Folder turísticos", "Papeleria", 5.00, 3.00, 40, "Folders corporativos y turísticos en couché pesado.", "uploads/folder.jpg"),
             ("ROMPECABEZAS EDUCATIVO", "Papeleria", 15.00, 10.00, 33, "Rompecabezas didáctico de 50 piezas con abecedario, números y figuras geométricas.", "uploads/rompecabezas.jpg"),
+            ("TARJETAS CALADAS", "Papeleria", 12.00, 10.00, 17, "Tarjetas finamente cortadas con diseños detallados para ocasiones especiales.", "uploads/tarjetas caladas.jpg"),
+            ("CALENDARIO TIPO PIRÁMIDE", "Papeleria", 18.00, 15.00, 17, "Calendario de mesa con diseño estructural en forma de pirámide.", "uploads/calendario piramide.jpg"),
+            ("CALENDARIO A4", "Papeleria", 8.00, 6.00, 25, "Calendario tamaño A4 ideal para colgar o escritorio.", "uploads/calendario A4.jpg"),
+            ("CALENDARIO A5", "Papeleria", 7.00, 5.00, 28, "Calendario compacto tamaño A5 personalizado.", "uploads/calendario A5.jpg"),
 
             # Cristalería
             ("FRASCO GRANDE DE VIDRIO", "Cristaleria", 18.00, 15.00, 16, "Frasco grande de vidrio grabado con diseños personalizados.", "uploads/frasco grande.jpg"),
